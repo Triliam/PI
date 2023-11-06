@@ -20,7 +20,7 @@ class IconeController extends Controller
 
     public function store(Request $request) {
         $icone = $this->icone->create([
-            'user_id' => $request->user_id,
+           
             'icone' => $request->icone
         ]);
         return response()->json($icone, 201);
