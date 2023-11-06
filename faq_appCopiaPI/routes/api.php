@@ -117,7 +117,8 @@ Route::prefix('l2')->middleware('jwt.auth')->group(function() {
 
         Route::post("pr", "App\Http\Controllers\PerguntaController@storeTogether");
         Route::patch("updatepr/{pergunta}", "App\Http\Controllers\PerguntaController@updateTogether");
-        
+        Route::delete("delpr/{pergunta}", "App\Http\Controllers\PerguntaController@destroyTogether");
+
         Route::post("pergunta", "App\Http\Controllers\PerguntaController@store");
         Route::patch("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
         Route::put("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");

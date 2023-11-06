@@ -145,6 +145,21 @@ class PerguntaController extends Controller
         return ['msg' => 'Pergunta removida'];
     }
 
+    public function destroyTogether($id) {
+        $pergunta = $this->pergunta->find($id);
+        if($pergunta === null) {
+            return response()->json(['erro' => 'Pergunta não existe.'], 404);
+        }
+
+        $resposta = Resposta::where('pergunta_id', $id)->first();
+        $resposta->delete();
+        $pergunta->delete();
+
+        return ['msg' => 'Pergunta e resposta removidas.'];
+    }
+
+
+
     public function getData() {
         $perguntas = Pergunta::with('tema', 'resposta')->get();
         $temas = Tema::all();
