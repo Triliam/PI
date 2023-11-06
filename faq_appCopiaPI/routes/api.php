@@ -69,6 +69,7 @@ Route::prefix('l2')->middleware('jwt.auth')->group(function() {
     Route::patch("icones", "App\Http\Controllers\IconeController@update");
 
     Route::post("pr", "App\Http\Controllers\PerguntaController@storeTogether");
+    Route::patch("updatepr/{pergunta}", "App\Http\Controllers\PerguntaController@updateTogether");
 
     Route::post("user", "App\Http\Controllers\UserController@store");
     Route::patch("user/{user}", "App\Http\Controllers\UserController@update");
@@ -114,6 +115,9 @@ Route::prefix('l2')->middleware('jwt.auth')->group(function() {
         Route::put("tema/{tema}", "App\Http\Controllers\TemaController@update");
         Route::delete("tema/{tema}", "App\Http\Controllers\TemaController@destroy");
 
+        Route::post("pr", "App\Http\Controllers\PerguntaController@storeTogether");
+        Route::patch("updatepr/{pergunta}", "App\Http\Controllers\PerguntaController@updateTogether");
+        
         Route::post("pergunta", "App\Http\Controllers\PerguntaController@store");
         Route::patch("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
         Route::put("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
