@@ -68,7 +68,7 @@ class PerguntaController extends Controller
             'pergunta_id' => $pergunta->id,
             'resposta' => $request->resposta
         ]);
-        return response()->json('show', 201);
+        return response()->json('Pergunta e resposta cadastradas com sucesso!', 201);
     }
 
     //metodo para criar pergunta sugerida - aluno
@@ -127,7 +127,7 @@ class PerguntaController extends Controller
         $resposta->resposta = $request->input('resposta');
         $resposta->save();
 
-        return response()->json("Pergunta e resposta atualizadas!", 200);
+        return response()->json("Pergunta e resposta atualizadas com sucesso!", 200);
     }
 
     /**

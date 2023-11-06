@@ -60,7 +60,7 @@ use Illuminate\Support\Facades\Route;
 //Prefix pra l0 para adm, l1 colab, l2 aluno
 
 //ROTAS ADM
-Route::prefix('l0')->middleware('jwt.auth')->group(function() {
+Route::prefix('l2')->middleware('jwt.auth')->group(function() {
 
     Route::get("users", "App\Http\Controllers\UserController@getUsersWithLevelOne");
 
@@ -131,7 +131,7 @@ Route::prefix('l0')->middleware('jwt.auth')->group(function() {
     });
 
     //ROTAS ALUNOS
-    Route::prefix('l2')->middleware('jwt.auth')->group(function() {
+    Route::prefix('l0')->middleware('jwt.auth')->group(function() {
 
         Route::post("pergunta", "App\Http\Controllers\PerguntaController@store");
 

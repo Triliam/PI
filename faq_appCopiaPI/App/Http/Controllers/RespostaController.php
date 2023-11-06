@@ -54,7 +54,7 @@ class RespostaController extends Controller
     public function show($id) {
         $resposta = $this->resposta->find($id);
         if($resposta === null) {
-            return response()->json(['erro' => 'n existe'], 404);
+            return response()->json(['erro' => 'Resposta não existe.'], 404);
         }
 
         return response()->json($resposta, 200);

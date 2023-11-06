@@ -38,7 +38,7 @@ class UserController extends Controller
     public function show($id) {
         $user = $this->user->find($id);
         if($user === null) {
-            return response()->json(['erro' => 'usuario n encontrado'], 404);
+            return response()->json(['erro' => 'Usuario não encontrado.'], 404);
         }
         return response()->json($user, 200);
     }
