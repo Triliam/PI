@@ -16,7 +16,6 @@ class FaqsController extends Controller
         ->get();
 
         return response()->json($result);
-
     }
 
     // public function mostrarPerguntasSugeridas() {

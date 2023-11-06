@@ -9,11 +9,9 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-
     public function __construct(User $user) {
-
         $this->user = $user;
-}
+    }
 
     public function index() {
         // return User::all();
@@ -22,7 +20,7 @@ class UserController extends Controller
         return response()->json($this->user->all(), 200);
     }
 
-    public function store(Request $request){
+    public function store(Request $request) {
         //adm cria/insere colaborador no sistema/no banco?
 
         //verifica se o email termina com @fatec.sp.gov.br
@@ -45,6 +43,7 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
+    //colocar hash no atualizar senha
     public function update(Request $request, $id) {
         $user = $this->user->find($id);
         // if($user === null) {
@@ -62,7 +61,7 @@ class UserController extends Controller
         }
         $request->validate($regrasDinamicas, $user->feedback());
         $user->update($request->all());
-    return response()->json($user, 200);
+        return response()->json($user, 200);
     }
 
     public function destroy(User $user) {
@@ -70,10 +69,7 @@ class UserController extends Controller
         return response()->json(['sucess'=>true]);
     }
 
-
-
-    public function getUsersWithLevelOne()
-    {
+    public function getUsersWithLevelOne() {
         $users = User::where('level', 1)->get();
         return response()->json($users);
     }

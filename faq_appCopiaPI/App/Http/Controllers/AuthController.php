@@ -24,18 +24,20 @@ class AuthController extends Controller
         //403 = forbidden -> proibido (login invalido)
     }
 
-    
     public function logout() {
         auth('api')->logout(); //cliente encaminhe um jwt valido
         return response()->json(['msg' => 'Logout realizado com sucesso!']);
     }
+
     public function refresh() {
         $token = auth('api')->refresh(); //cliente encaminhe um jwt valido
         return response()->json(['token' => $token]);
     }
+
     public function me() {
         return response()->json(auth()->user());
     }
+    
     //gera o token por meio de usuario(no caso email) e senha
     //cliente armazena
     //cliente precisa implementar no headers: Key:Authorization, Value Bearer token gerado

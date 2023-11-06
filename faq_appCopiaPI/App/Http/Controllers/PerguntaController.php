@@ -15,25 +15,20 @@ class PerguntaController extends Controller
 {
 
     public function __construct(Pergunta $pergunta) {
-
         $this->pergunta = $pergunta;
-
-}
-
-
+    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-    $perguntaRepository = new PerguntaRepository($this->pergunta);
+    public function index(Request $request) {
+        $perguntaRepository = new PerguntaRepository($this->pergunta);
 
-    if($request->has('filtro')){
-        $perguntaRepository->filtro($request->filtro);
-    }
+        if($request->has('filtro')){
+            $perguntaRepository->filtro($request->filtro);
+        }
         return response()->json($perguntaRepository->getResultado(), 200);
     }
 
@@ -51,8 +46,7 @@ class PerguntaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         ////pro validade funcionar precisa implementar do lado do cliente: Accept - application/json - sem isso, vai retornar a rota raiz da aplicacao - a pagina do laravel
         $request->validate($this->pergunta->rules(), $this->pergunta->feedback());
         $pergunta = $this->pergunta->create([
@@ -63,9 +57,7 @@ class PerguntaController extends Controller
         return response()->json($pergunta, 201);
     }
 
-    public function storeTogether(Request $request)
-    {
-
+    public function storeTogether(Request $request) {
         $pergunta = Pergunta::create([
             'tema_id' => $request->tema_id,
             'user_id' => $request->user_id,
@@ -98,15 +90,13 @@ class PerguntaController extends Controller
      * @param  \App\Models\Pergunta  $pergunta
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         $pergunta = $this->pergunta->find($id);
         if($pergunta === null) {
             return response()->json(['erro' => 'n existe'], 404);
         }
         return response()->json($pergunta, 200);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -115,11 +105,10 @@ class PerguntaController extends Controller
      * @param  \App\Models\Pergunta  $pergunta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $pergunta = $this->pergunta->find($id);
         if($pergunta === null) {
-            return response()->json(['erro' => 'n existe'], 404);
+            return response()->json(['erro' => 'Pergunta não existe.'], 404);
         }
 
         $request->validate($this->pergunta->rules(), $this->pergunta->feedback());
@@ -127,22 +116,19 @@ class PerguntaController extends Controller
         $pergunta->update($request->all());
         return response()->json($pergunta, 200);
     }
-    public function updateTogether(Request $request, Pergunta $pergunta) {
-        $resposta = new Resposta;
-        // $resposta->$request->input('resposta');
-        // $pergunta = $this->pergunta->find($id);
-        // if($pergunta === null) {
-        //     return response()->json(['erro' => 'n existe'], 404);
-        // }
-        $atributos = $resposta;
-        $pergunta = $this->pergunta->selectRaw($resposta)->with('resposta:id,resposta')->update($request->all());
-         $resposta->update($request->all());
-        // $pergunta->save();
-        // $resposta->save();
-        return response()->json("atualization on on", 200);
+
+    public function updateTogether(Request $request, $id) {
+
+        $pergunta = Pergunta::findOrFail($id);
+        $pergunta->pergunta = $request->input('pergunta');
+        $pergunta->save();
+
+        $resposta = Resposta::where('pergunta_id', $id)->first();
+        $resposta->resposta = $request->input('resposta');
+        $resposta->save();
+
+        return response()->json("Pergunta e resposta atualizadas!", 200);
     }
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -150,48 +136,46 @@ class PerguntaController extends Controller
      * @param  \App\Models\Pergunta  $pergunta
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $pergunta = $this->pergunta->find($id);
         if($pergunta === null) {
-            return response()->json(['erro' => 'n existe'], 404);
+            return response()->json(['erro' => 'Pergunta não existe.'], 404);
         }
         $pergunta->delete();
         return ['msg' => 'Pergunta removida'];
     }
 
-    public function getData()
-{
-    $perguntas = Pergunta::with('tema', 'resposta')->get();
-    $temas = Tema::all();
-    $icones = Icone::all();
+    public function getData() {
+        $perguntas = Pergunta::with('tema', 'resposta')->get();
+        $temas = Tema::all();
+        $icones = Icone::all();
 
-    return response()->json([
-        'perguntas' => $perguntas,
-        'temas' => $temas,
-        'icones' => $icones,
-    ]);
-}
-public function indexFaq() {
-    $result = DB::table('temas')
-    ->join('perguntas', 'temas.id', '=', 'perguntas.tema_id')
-    ->join('respostas', 'perguntas.id', '=', 'respostas.pergunta_id')
-    ->select('temas.tema', 'temas.icone', 'perguntas.id', 'perguntas.pergunta', 'respostas.resposta')
-    ->get();
+        return response()->json([
+            'perguntas' => $perguntas,
+            'temas' => $temas,
+            'icones' => $icones,
+        ]);
+    }
 
-    return response()->json($result);
+    public function indexFaq() {
+        $result = DB::table('temas')
+        ->join('perguntas', 'temas.id', '=', 'perguntas.tema_id')
+        ->join('respostas', 'perguntas.id', '=', 'respostas.pergunta_id')
+        ->select('temas.tema', 'temas.icone', 'perguntas.id', 'perguntas.pergunta', 'respostas.resposta')
+        ->get();
 
-}
-public function getDatas()
-{
-    $perguntas = $this->indexFaq();
-    $temas = Tema::all();
-    $icones = Icone::all();
+        return response()->json($result);
+    }
 
-    return response()->json([
-        'perguntas' => $perguntas,
-        'temas' => $temas,
-        'icones' => $icones,
-    ]);
-}
+    public function getDatas() {
+        $perguntas = $this->indexFaq();
+        $temas = Tema::all();
+        $icones = Icone::all();
+
+        return response()->json([
+            'perguntas' => $perguntas,
+            'temas' => $temas,
+            'icones' => $icones,
+        ]);
+    }
 }

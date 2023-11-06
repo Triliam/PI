@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //ROTAS PUBLICAS
-    Route::get("icones", "App\Http\Controllers\IconeController@index");
+
 
     Route::get('3.1', "App\Http\Controllers\PerguntaController@getDatas");
     Route::get('3', "App\Http\Controllers\PerguntaController@getData");
@@ -64,7 +64,9 @@ Route::prefix('l0')->middleware('jwt.auth')->group(function() {
 
     Route::get("users", "App\Http\Controllers\UserController@getUsersWithLevelOne");
 
+    Route::get("icones", "App\Http\Controllers\IconeController@index");
     Route::post("icones", "App\Http\Controllers\IconeController@store");
+    Route::patch("icones", "App\Http\Controllers\IconeController@update");
 
     Route::post("pr", "App\Http\Controllers\PerguntaController@storeTogether");
 

@@ -18,12 +18,23 @@ class IconeController extends Controller
         return response()->json($this->icone->all(), 200);
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $icone = $this->icone->create([
             'user_id' => $request->user_id,
             'icone' => $request->icone
         ]);
         return response()->json($icone, 201);
+    }
+
+    public function update(Request $request, $id) {
+        $icone = $this->icone->find($id);
+        if($icone === null) {
+            return response()->json(['erro' => 'n existe'], 404);
+        }
+
+        // $request->validate($this->icone->rules(), $this->icone->feedback());
+
+        $icone->update($request->all());
+        return response()->json($icone, 200);
     }
 }

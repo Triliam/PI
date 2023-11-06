@@ -10,7 +10,6 @@ class TemaController extends Controller
 {
 
     public function __construct(Tema $tema) {
-
         $this->tema = $tema;
     }
 
@@ -19,16 +18,14 @@ class TemaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-    $temaRepository = new TemaRepository($this->tema);
+    public function index(Request $request) {
+        $temaRepository = new TemaRepository($this->tema);
 
-    if($request->has('filtro')){
-        $temaRepository->filtro($request->filtro);
+        if($request->has('filtro')){
+            $temaRepository->filtro($request->filtro);
+        }
+        return response()->json($temaRepository->getResultado(), 200);
     }
-    return response()->json($temaRepository->getResultado(), 200);
-    }
-
 
     /**
      * Store a newly created resource in storage.
@@ -36,8 +33,7 @@ class TemaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //pro validade funcionar precisa implementar do lado do cliente: Accept - application/json - sem isso, vai retornar a rota raiz da aplicacao - a pagina do laravel
        $request->validate($this->tema->rules(), $this->tema->feedback());
         $tema = $this->tema->create([
@@ -45,6 +41,7 @@ class TemaController extends Controller
             'tema' => $request->tema,
             'icone' => $request->icone
         ]);
+
         return response()->json($tema, 201);
     }
 
@@ -54,11 +51,10 @@ class TemaController extends Controller
      * @param  Integer
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         $tema = $this->tema->find($id);
         if($tema === null) {
-            return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
+            return response()->json(['erro' => 'Recurso pesquisado não existe.'], 404);
         }
         return response()->json($tema, 200);
     }
@@ -70,13 +66,12 @@ class TemaController extends Controller
      * @param  Integer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //tema->update($request->all());
 
         $tema = $this->tema->find($id);
         if($tema === null) {
-            return response()->json(['erro' => 'n possivel atualizae'], 404);
+            return response()->json(['erro' => 'Não é possivel atualizar, não encontrado.'], 404);
         }
         if($request->method() === 'PATCH') {
             $regrasDinamicas = array();
@@ -90,12 +85,12 @@ class TemaController extends Controller
             }
             $request->validate($regrasDinamicas, $tema->feedback());
         } else {
-        $request->validate($this->tema->rules(), $this->tema->feedback());
+            $request->validate($this->tema->rules(), $this->tema->feedback());
 
+        }
+        $tema->update($request->all());
+        return response()->json($tema, 200);
     }
-    $tema->update($request->all());
-    return response()->json($tema, 200);
-}
 
     /**
      * Remove the specified resource from storage.
@@ -103,12 +98,11 @@ class TemaController extends Controller
      * @param  Integer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //$tema->delete();
         $tema = $this->tema->find($id);
         if($tema === null) {
-            return response()->json(['erro' => 'Recurso pesquisado nao existe'], 404);
+            return response()->json(['erro' => 'Recurso pesquisado não existe.'], 404);
         }
         $tema->delete();
         return ['msg' => 'Tema removido!'];
