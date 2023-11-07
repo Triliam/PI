@@ -17,15 +17,21 @@ class CreatePerguntasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('tema_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('pergunta', 255);
+            $table->string('pergunta', 5000);
             $table->boolean('pergunta_sugerida')->defalt(false);
             $table->timestamps();
-
 
             $table->foreign('tema_id')->references('id')->on('temas');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
+
+    //BANCO
+//alterando pra null, na refatoracao reavaliar
+//alter table perguntas MODIFY COLUMN `tema_id` bigint unsigned DEFAULT NULL
+
+// --alterando tipo de dado e setando null, depois de refatorar o codigo no back, alterar pra not null e bool
+// alter table perguntas MODIFY COLUMN `pergunta_sugerida` int NULL default null
 
     /**
      * Reverse the migrations.

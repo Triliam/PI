@@ -21,7 +21,7 @@ class AuthController extends Controller
             return response()->json(['token' => $token]);
             //erro de usuario ou senha
         } else {
-            return response()->json(['erro' => 'Usuaário ou senha inválido!'], 403);
+            return response()->json(['erro' => 'Usuário ou senha inválidos!'], 403);
         }
         //403 = forbidden -> proibido (login invalido)
     }

@@ -17,7 +17,7 @@ class CreateTemasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('tema', 50)->unique();
-            $table->string('icone', 50);
+            $table->string('icone', 150);
             $table->timestamps();
 
 

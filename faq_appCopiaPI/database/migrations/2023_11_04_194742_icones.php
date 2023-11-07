@@ -15,11 +15,7 @@ class Icones extends Migration
     {
         Schema::create('icones', function(Blueprint $table){
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->string('icone', 255);
-            $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
