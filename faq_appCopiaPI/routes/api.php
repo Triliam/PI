@@ -83,19 +83,20 @@ Route::prefix('l2')->middleware('jwt.auth')->group(function() {
     Route::put("tema/{tema}", "App\Http\Controllers\TemaController@update");
     Route::delete("tema/{tema}", "App\Http\Controllers\TemaController@destroy");
 
-    Route::post("pergunta", "App\Http\Controllers\PerguntaController@store");
-    Route::patch("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
-    Route::put("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
-    Route::delete("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@destroy");
+    // Route::post("pergunta", "App\Http\Controllers\PerguntaController@store");
+    // Route::patch("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
+    // Route::put("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
+    // Route::delete("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@destroy");
 
-    Route::post("resposta", "App\Http\Controllers\RespostaController@store");
-    Route::patch("resposta/{resposta}", "App\Http\Controllers\RespostaController@update");
-    Route::put("resposta/{resposta}", "App\Http\Controllers\RespostaController@update");
-    Route::delete("resposta/{resposta}", "App\Http\Controllers\RespostaController@destroy");
+    // Route::post("resposta", "App\Http\Controllers\RespostaController@store");
+    // Route::patch("resposta/{resposta}", "App\Http\Controllers\RespostaController@update");
+    // Route::put("resposta/{resposta}", "App\Http\Controllers\RespostaController@update");
+    // Route::delete("resposta/{resposta}", "App\Http\Controllers\RespostaController@destroy");
 
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
     Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
     Route::post('me', 'App\Http\Controllers\AuthController@me');
+    Route::get('me', 'App\Http\Controllers\AuthController@me');
 });
 
 
@@ -120,19 +121,20 @@ Route::prefix('l2')->middleware('jwt.auth')->group(function() {
         Route::patch("updatepr/{pergunta}", "App\Http\Controllers\PerguntaController@updateTogether");
         Route::delete("delpr/{pergunta}", "App\Http\Controllers\PerguntaController@destroyTogether");
 
-        Route::post("pergunta", "App\Http\Controllers\PerguntaController@store");
-        Route::patch("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
-        Route::put("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
-        Route::delete("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@destroy");
+        // Route::post("pergunta", "App\Http\Controllers\PerguntaController@store");
+        // Route::patch("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
+        // Route::put("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@update");
+        // Route::delete("pergunta/{pergunta}", "App\Http\Controllers\PerguntaController@destroy");
 
-        Route::post("resposta", "App\Http\Controllers\RespostaController@store");
-        Route::patch("resposta/{resposta}", "App\Http\Controllers\RespostaController@update");
-        Route::put("resposta/{resposta}", "App\Http\Controllers\RespostaController@update");
-        Route::delete("resposta/{resposta}", "App\Http\Controllers\RespostaController@destroy");
+        // Route::post("resposta", "App\Http\Controllers\RespostaController@store");
+        // Route::patch("resposta/{resposta}", "App\Http\Controllers\RespostaController@update");
+        // Route::put("resposta/{resposta}", "App\Http\Controllers\RespostaController@update");
+        // Route::delete("resposta/{resposta}", "App\Http\Controllers\RespostaController@destroy");
 
         Route::post('logout', 'App\Http\Controllers\AuthController@logout');
         Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
         Route::post('me', 'App\Http\Controllers\AuthController@me');
+        Route::get('me', 'App\Http\Controllers\AuthController@me');
 
     });
 
@@ -140,5 +142,8 @@ Route::prefix('l2')->middleware('jwt.auth')->group(function() {
     Route::prefix('l0')->middleware('jwt.auth')->group(function() {
 
         Route::post("pergunta", "App\Http\Controllers\PerguntaController@store");
-
+        Route::post('logout', 'App\Http\Controllers\AuthController@logout');
+        Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
+        Route::post('me', 'App\Http\Controllers\AuthController@me');
+        Route::get('me', 'App\Http\Controllers\AuthController@me');
     });
