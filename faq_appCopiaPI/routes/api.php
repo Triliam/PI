@@ -52,9 +52,9 @@ use Illuminate\Support\Facades\Route;
     Route::get("resposta", "App\Http\Controllers\RespostaController@index");
     Route::get("resposta/{resposta}", "App\Http\Controllers\RespostaController@show");
 
+    Route::post('logint', 'App\Http\Controllers\AuthController@loginToken');
     Route::post('login', 'App\Http\Controllers\AuthController@login');
 
-    Route::post("pr", "App\Http\Controllers\PerguntaController@storeTogether");
 
 
 //Prefix pra l0 para adm, l1 colab, l2 aluno

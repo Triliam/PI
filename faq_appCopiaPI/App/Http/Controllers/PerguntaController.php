@@ -47,7 +47,7 @@ class PerguntaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        ////pro validade funcionar precisa implementar do lado do cliente: Accept - application/json - sem isso, vai retornar a rota raiz da aplicacao - a pagina do laravel
+
         $request->validate($this->pergunta->rules(), $this->pergunta->feedback());
         $pergunta = $this->pergunta->create([
             'tema_id' => $request->tema_id,

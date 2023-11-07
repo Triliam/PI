@@ -10,11 +10,6 @@ use App\Repositories\RespostaRepository;
 class RespostaController extends Controller
 {
 
-
-    // public function __construct() {
-    //     // Código para inicializar a pergunta e a resposta, se necessário
-    // }
-
     public function __construct(Resposta $resposta) {
         $this->resposta = $resposta;
     }
